@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html class="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Swervetracker Diagrams</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white font-mono p-6">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">📊 Swervetracker Architecture Diagrams</h1>
+    <h2 class="text-2xl font-semibold mb-2 mt-6">Entity Relationship Diagram (ERD)</h2>
+    <pre class="bg-gray-800 p-4 rounded-xl overflow-auto text-sm">
++----------------+        +------------------+       +------------------+
+|     Skier      |        |      Pass        |       |   MediaSegment   |
++----------------+        +------------------+       +------------------+
+| id (PK)        |<----+  | id (PK)          |<--+   | id (PK)          |
+| name           |     |  | skier_id (FK)    |   |   | pass_id (FK)     |
+| team           |     +--| date_time        |   +-->| type (video/img) |
+| ranking        |        | boat_speed       |       | file_link        |
++----------------+        | notes            |       | timestamp_start  |
+                          +------------------+       | timestamp_end    |
+                                                     +------------------+
+                +------------------+       +------------------+
+                |    GPSPoint      |       |   SlalomRun      |
+                +------------------+       +------------------+
+                | id (PK)          |<--+   | id (PK)          |
+                | pass_id (FK)     |   +-->| pass_id (FK)     |
+                | time             |       | start_time       |
+                | lat/lon (Point)  |       | end_time         |
+                | vector_angle     |       | buoy_hits JSON   |
+                +------------------+       +------------------+
+    </pre>
+
+    <h2 class="text-2xl font-semibold mb-2 mt-6">Component Diagram</h2>
+    <pre class="bg-gray-800 p-4 rounded-xl overflow-auto text-sm">
+[Mobile Device]
+   |
+   |-- captures video + metadata (GPS, timestamp)
+   |-- overlays with Creatomate templates
+   ↓
+[Sync.com cloud storage]
+   |
+   |-- Admins pull to desktop (ACDSee)
+   ↓
+[Backend (Django)]
+   |-- Processes media metadata
+   |-- Imports GPS logs (10Hz)
+   |-- Matches media + GPS + buoy
+   ↓
+[Database (PostgreSQL + PostGIS)]
+   |-- Models: Skier, Pass, GPSPoint, MediaSegment
+   ↓
+[Web UI (Tailwind + Django Templates)]
+   |-- View sessions, media, overlay dashboards
+   |-- Role-based access for skiers, coaches
+    </pre>
+
+    <h2 class="text-2xl font-semibold mb-2 mt-6">Data Flow</h2>
+    <pre class="bg-gray-800 p-4 rounded-xl overflow-auto text-sm">
+[GPS Logger (10Hz)]         [Video/Photo Capture]
+        |                           |
+        |    timestamps + lat/lon   |   device metadata
+        +-------------+-------------+
+                      ↓
+           [Ingestion / Sync Engine]
+                      ↓
+        [Django + PostGIS Database]
+                      ↓
+       [Slalom Detection Engine]
+        (celery/Django-Q, buoy hit detection)
+                      ↓
+        [MediaSegment + Overlays Created]
+                      ↓
+        [Admin UI / Dashboard]
+    </pre>
+  </div>
+</body>
+</html>

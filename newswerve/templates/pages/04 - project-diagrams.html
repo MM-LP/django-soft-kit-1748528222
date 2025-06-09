@@ -46,78 +46,76 @@
   <!---------- END HEADER 7 w/ text and video ------- -->
 <div class="row">
   <div class="col-lg-7 text-center mx-auto">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-3xl font-bold mb-6">📊 Swervetracker Architecture Diagrams</h1>
+      <h2 class="text-2xl font-semibold mb-2 mt-6">Entity Relationship Diagram (ERD)</h2>
+      <pre class="bg-gray-200 p-4 rounded-xl overflow-auto text-sm">
+  +----------------+        +------------------+       +------------------+
+  |     Skier      |        |      Pass        |       |   MediaSegment   |
+  +----------------+        +------------------+       +------------------+
+  | id (PK)        |<----+  | id (PK)          |<--+   | id (PK)          |
+  | name           |     |  | skier_id (FK)    |   |   | pass_id (FK)     |
+  | team           |     +--| date_time        |   +-->| type (video/img) |
+  | ranking        |        | boat_speed       |       | file_link        |
+  +----------------+        | notes            |       | timestamp_start  |
+                            +------------------+       | timestamp_end    |
+                                                      +------------------+
+                  +------------------+       +------------------+
+                  |    GPSPoint      |       |   SlalomRun      |
+                  +------------------+       +------------------+
+                  | id (PK)          |<--+   | id (PK)          |
+                  | pass_id (FK)     |   +-->| pass_id (FK)     |
+                  | time             |       | start_time       |
+                  | lat/lon (Point)  |       | end_time         |
+                  | vector_angle     |       | buoy_hits JSON   |
+                  +------------------+       +------------------+
+      </pre>
 
-    <div class="max-w-5xl mx-auto">
-        <h1 class="text-4xl font-bold mb-6">Swervetracker – Consolidated Project Overview</h1>
+      <h2 class="text-2xl font-semibold mb-2 mt-6">Component Diagram</h2>
+      <pre class="bg-gray-200 p-4 rounded-xl overflow-auto text-sm">
+  [Mobile Device]
+    |
+    |-- captures video + metadata (GPS, timestamp)
+    |-- overlays with Creatomate templates
+    ↓
+  [Sync.com cloud storage]
+    |
+    |-- Admins pull to desktop (ACDSee)
+    ↓
+  [Backend (Django)]
+    |-- Processes media metadata
+    |-- Imports GPS logs (10Hz)
+    |-- Matches media + GPS + buoy
+    ↓
+  [Database (PostgreSQL + PostGIS)]
+    |-- Models: Skier, Pass, GPSPoint, MediaSegment
+    ↓
+  [Web UI (Tailwind + Django Templates)]
+    |-- View sessions, media, overlay dashboards
+    |-- Role-based access for skiers, coaches
+      </pre>
 
-        <p class="mb-4 text-lg">Swervetracker is a high-fidelity media tracking and performance analysis system for water skiers, blending precision GPS, synchronized video/audio, mobile templates, and a powerful backend workflow for tagging, sharing, and reviewing slalom passes.</p>
-
-        <h2 class="text-3xl font-bold mt-10 mb-4">🚀 Project Phases</h2>
-        <ul class="list-disc list-inside space-y-2">
-          <li><strong>Phase I – Concept Development:</strong> GPS-tagged media, mobile-first capture, skier/boat data sync.</li>
-          <li><strong>Phase II – Swervetracker Consolidation:</strong> Django + Tailwind + PostgreSQL stack; merge Slalom repo, ACDSee/Sync integration, unified schema.</li>
-          <li><strong>Phase III – UI/UX + Frontend:</strong> Tailwind CSS layout, mobile overlay templates, Creatomate for rendering.</li>
-          <li><strong>Phase IV – Django for Media:</strong> Admin panel, REST API, Django-stored metadata from cloud/mobile pipelines.</li>
-          <li><strong>Phase V – Slalom GPS Tracker:</strong> 10Hz GPS sync with video/audio, buoy detection engine, statistical modeling.</li>
-        </ul>
-
-        <h2 class="text-3xl font-bold mt-10 mb-4">🧰 Technology Stack</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-white">
-          <div class="bg-gray-600 p-4 rounded-xl">
-            <h3 class="text-xl font-semibold">Frontend</h3>
-            <ul class="list-disc list-inside">
-              <li>Tailwind CSS</li>
-              <li>Django Templates</li>
-              <li>Mobile-friendly layouts</li>
-            </ul>
-          </div>
-          <div class="bg-gray-600 p-4 rounded-xl">
-            <h3 class="text-xl font-semibold">Backend</h3>
-            <ul class="list-disc list-inside">
-              <li>Django (Python)</li>
-              <li>PostgreSQL + PostGIS</li>
-              <li>Django REST Framework (optional)</li>
-            </ul>
-          </div>
-          <div class="bg-gray-600 p-4 rounded-xl">
-            <h3 class="text-xl font-semibold">Media Workflow</h3>
-            <ul class="list-disc list-inside">
-              <li>Sync.com for secure storage</li>
-              <li>ACDSee for admin tagging</li>
-              <li>Creatomate for overlays</li>
-            </ul>
-          </div>
-          <div class="bg-gray-600 p-4 rounded-xl">
-            <h3 class="text-xl font-semibold">Data & Sync</h3>
-            <ul class="list-disc list-inside">
-              <li>10Hz GPS tracker with buoy alignment</li>
-              <li>Celery or Django-Q for async post-processing</li>
-              <li>JSON/CSV imports, time-based alignment</li>
-            </ul>
-          </div>
-        </div>
-
-        <h2 class="text-3xl font-bold mt-10 mb-4">📦 Core Features</h2>
-        <ul class="list-disc list-inside space-y-2">
-          <li>Mobile photo/video capture with embedded metadata</li>
-          <li>Buoy-level GPS analysis from 10Hz log files</li>
-          <li>Automated media clipping and tagging</li>
-          <li>Template overlays for quick social sharing</li>
-          <li>Admin dashboard for coaches and reviewers</li>
-        </ul>
-
-        <h2 class="text-3xl font-bold mt-10 mb-4">🌐 Hosting & Security</h2>
-        <p class="mb-4">
-          The system is designed to run on a Swiss-based VPS or secure cloud host with encrypted storage.
-          Static assets and uploaded videos are stored outside the DB but linked via metadata, making it scalable and secure.
-        </p>
-
-        <footer class="mt-10 text-gray-600 text-sm">
-          Swervetracker Planning Summary • Generated June 2025
-        </footer>
-      </div>
-
+      <h2 class="text-2xl font-semibold mb-2 mt-6">Data Flow</h2>
+      <pre class="bg-gray-200 p-4 rounded-xl overflow-auto text-sm">
+  [GPS Logger (10Hz)]         [Video/Photo Capture]
+          |                           |
+          |    timestamps + lat/lon   |   device metadata
+          +-------------+-------------+
+                        ↓
+            [Ingestion / Sync Engine]
+                        ↓
+          [Django + PostGIS Database]
+                        ↓
+        [Slalom Detection Engine]
+          (celery/Django-Q, buoy hit detection)
+                        ↓
+          [MediaSegment + Overlays Created]
+                        ↓
+          [Admin UI / Dashboard]
+      </pre>
     </div>
+
+  </div>
 </div>
 
 

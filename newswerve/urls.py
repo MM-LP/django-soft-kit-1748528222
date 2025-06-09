@@ -12,6 +12,7 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('projectsummary/', views.projectsummary, name='projectsummary'),
     path('projectarchitecture/', views.projectarchitecture, name='projectarchitecture'),
+    path('projectdiagrams/', views.projectdiagrams, name='projectdiagrams'),
     path('integration/', views.integration, name='integration'),
     path('indexcards/', views.index_cards, name='indexcards'),
 

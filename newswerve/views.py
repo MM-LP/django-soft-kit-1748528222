@@ -31,6 +31,9 @@ def projectarchitecture(request):
 def integration(request):
   return render(request, 'pages/03-swervetracker-integration.html')
 
+def projectdiagrams(request):
+  return render(request, 'pages/04 - project-diagrams.html')
+
 def index_cards(request):
   return render(request, 'pages/index-cards.html')
 
