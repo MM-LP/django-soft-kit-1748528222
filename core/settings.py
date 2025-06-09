@@ -6,13 +6,15 @@ Copyright (c) 2019 - present AppSeed.us
 import os, random, string
 from pathlib import Path
 from dotenv import load_dotenv
+from str2bool import str2bool
 
 from helpers import *
 
 load_dotenv()  # LOAD variables from .env
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Load .env file
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(dotenv_path=BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -53,11 +55,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "home",
-    "theme_soft_design",
+    "newswerve",
+    "django_browser_reload",
 ]
-
-
+ 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -67,11 +68,17 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
-ROOT_URLCONF = "core.urls"
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",  # your Next.js frontend dev server
+]
 
-HOME_TEMPLATES = os.path.join(BASE_DIR, "templates")
+ROOT_URLCONF = "newswerve.urls"
+
+HOME_TEMPLATES = os.path.join(BASE_DIR, "newserve", "templates")
+
 
 TEMPLATES = [
     {
@@ -83,7 +90,7 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+                "django.contrib.messages.context_processors.messages",  
             ],
         },
     },
@@ -96,11 +103,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DB_ENGINE = os.getenv("DB_ENGINE", None)
+DB_NAME = os.getenv("DB_NAME", None)
 DB_USERNAME = os.getenv("DB_USERNAME", None)
-DB_PASS = os.getenv("DB_PASS", None)
+DB_PASS = os.getenv("DB_PASSWORD", None)
 DB_HOST = os.getenv("DB_HOST", None)
 DB_PORT = os.getenv("DB_PORT", None)
-DB_NAME = os.getenv("DB_NAME", None)
+
 
 if DB_ENGINE and DB_NAME and DB_USERNAME:
     DATABASES = {
@@ -116,8 +124,8 @@ if DB_ENGINE and DB_NAME and DB_USERNAME:
 else:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": "db.sqlite3",
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "db.postgresql",
         }
     }
 

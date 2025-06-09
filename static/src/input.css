@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .tw-orb-before::before {
+    @apply tw-absolute tw--inset-3 tw-animate-spin tw-rounded-full tw-border tw-border-transparent;
+    background: conic-gradient(from 180deg, transparent, var(--color-blue-500)) border-box;
+    mask-composite: exclude !important;
+    -webkit-mask: linear-gradient(white 0 0) padding-box, linear-gradient(white 0 0);
+    mask: linear-gradient(white 0 0) padding-box, linear-gradient(white 0 0);
+  }
+
+  .tw-animate-breath {
+    animation: breath 8s ease-in-out infinite both;
+  }
+
+  @keyframes breath {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+}

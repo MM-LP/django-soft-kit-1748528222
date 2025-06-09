@@ -1,0 +1,17 @@
+{% load static %}
+
+
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <div class="tw-relative">
+     <div class="tw-orb-before"></div>
+        <div class="tw">
+            {% load logo_orb %}
+            {% static 'img/logos/logo.png' as logo_path %}
+            {% with '<img src="'|add:logo_path|add:'" alt="Logo" >' as logo_img %}
+              {% logo_orb logo_img href='/indextest/' size='medium' %}
+            {% endwith %}
+        </div>
+      </div>                  
+            <div class="tw-bg-green-500 tw-text-white tww-text-xl -twp-4 -twrounded mt-6">
+              ✅ Tailwind override test
+            </div>

@@ -1,0 +1,26 @@
+{
+  "name": "softui-pro",
+  "version": "1.0.0",
+  "description": "Starter generated with [Django Generator](https://app-generator.dev/tools/django-generator/) (an open-source service) using **Soft-Kit Design**, best practices and up-to-date Dependencies. In order to use the sources, follow the build instructions as presented in `Start with Docker` and `Manual Build` sections.",
+  "main": "postcss.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tailwindcss -i ./newswerve/static/src/input.css -o ./newswerve/static/css/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/app-generator/django-soft-kit-1748528222.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/app-generator/django-soft-kit-1748528222/issues"
+  },
+  "homepage": "https://github.com/app-generator/django-soft-kit-1748528222#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8"
+  }
+}

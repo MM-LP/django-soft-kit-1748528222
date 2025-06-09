@@ -8,6 +8,48 @@
 build/
 env
 
-#src
-*.sqlite*
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
+# local env files
+.env*.local
+# ----------------------------------------
+# Python / Django
+# ----------------------------------------
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtualenv
+venv/
+ENV/
+env/
+.venv/
+
+# Django
+db.postregsql
+*.postgresql
+*.log
+local_settings.py
+
+# Django migrations
+**/migrations/
+!**/migrations/__init__.py
+
+# Python environment
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.nox/
+
+# VS Code settings (optional)
+.vscode/
