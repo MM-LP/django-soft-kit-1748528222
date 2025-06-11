@@ -3,7 +3,8 @@ from django.contrib import admin
 from .models.as_operation import as_operation
 from .models.autosteer import autosteer
 from .models.boat_detail import boat_detail
-from .models.boat_info import boat_info
+from .models.boat_driver import boat_driver
+from .models.boat_info import boat_info 
 from .models.call import call
 from .models.conflict_log import conflict_log
 from .models.contacts import contacts
@@ -14,6 +15,7 @@ from .models.device_sync_status import device_sync_status
 from .models.driver_info import driver_info
 from .models.file_format import file_format
 from .models.gps_course import gps_course
+from .models.group_invite import group_invite
 from .models.health import health
 from .models.log import log
 from .models.media_file import media_file
@@ -31,7 +33,10 @@ from .models.rope import rope
 from .models.set_detail import set_detail
 from .models.set_log import set_log
 from .models.share_link import share_link
+from .models.shared_set import shared_set
+from .models.shared_set_detail import shared_set_detail
 from .models.ski_detail import ski_detail
+from .models.ski_group import ski_group
 from .models.skier_info import skier_info
 from .models.speed import speed
 from .models.stream import stream
@@ -58,6 +63,11 @@ class autosteerAdmin(admin.ModelAdmin):
 class boat_detailAdmin(admin.ModelAdmin):
     list_display = [field.name for field in boat_detail._meta.fields]
     search_fields = [field.name for field in boat_detail._meta.fields if field.name != 'id']
+
+@admin.register(boat_driver)
+class boat_driverAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in boat_driver._meta.fields]
+    search_fields = [field.name for field in boat_driver._meta.fields if field.name != 'id']
 
 @admin.register(boat_info)
 class boat_infoAdmin(admin.ModelAdmin):
@@ -113,6 +123,11 @@ class file_formatAdmin(admin.ModelAdmin):
 class gps_courseAdmin(admin.ModelAdmin):
     list_display = [field.name for field in gps_course._meta.fields]
     search_fields = [field.name for field in gps_course._meta.fields if field.name != 'id']
+
+@admin.register(group_invite)
+class group_inviteAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in group_invite._meta.fields]
+    search_fields = [field.name for field in group_invite._meta.fields if field.name != 'id']
 
 @admin.register(health)
 class healthAdmin(admin.ModelAdmin):
@@ -199,11 +214,25 @@ class share_linkAdmin(admin.ModelAdmin):
     list_display = [field.name for field in share_link._meta.fields]
     search_fields = [field.name for field in share_link._meta.fields if field.name != 'id']
 
+@admin.register(shared_set)
+class shared_setAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in shared_set._meta.fields]
+    search_fields = [field.name for field in shared_set._meta.fields if field.name != 'id']
+
+@admin.register(shared_set_detail)
+class shared_set_detailAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in shared_set_detail._meta.fields]
+    search_fields = [field.name for field in shared_set_detail._meta.fields if field.name != 'id']
+
 @admin.register(ski_detail)
 class ski_detailAdmin(admin.ModelAdmin):
     list_display = [field.name for field in ski_detail._meta.fields]
     search_fields = [field.name for field in ski_detail._meta.fields if field.name != 'id']
 
+@admin.register(ski_group)
+class ski_groupAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in ski_group._meta.fields]
+    search_fields = [field.name for field in ski_group._meta.fields if field.name != 'id']
 @admin.register(skier_info)
 class skier_infoAdmin(admin.ModelAdmin):
     list_display = [field.name for field in skier_info._meta.fields]

@@ -853,6 +853,10 @@ video {
   seq_start: pos;
 }
 
+.\[server\:main\] {
+  server: main;
+}
+
 .\[start\:end\] {
   start: end;
 }
@@ -871,10 +875,6 @@ video {
 
 .\[top\:bottom\] {
   top: bottom;
-}
-
-.\[trail_start\:middle_semicolon_index\] {
-  trail_start: middle semicolon index;
 }
 
 .\[upto\:next\] {
