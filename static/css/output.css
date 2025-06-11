@@ -716,8 +716,20 @@ video {
   }
 }
 
-.\[-2\:space\] {
-  -2: space;
+.\[-2\:-1\] {
+  -2: -1;
+}
+
+.\[-4\:-3\] {
+  -4: -3;
+}
+
+.\[-5\:-3\] {
+  -5: -3;
+}
+
+.\[-6\:-5\] {
+  -6: -5;
 }
 
 .\[a\:b\] {
@@ -728,16 +740,16 @@ video {
   args_start: args end;
 }
 
+.\[b\:e\] {
+  b: e;
+}
+
 .\[bottom\:top\] {
   bottom: top;
 }
 
 .\[cols_start\:cols_end\] {
   cols_start: cols end;
-}
-
-.\[cur\:space\] {
-  cur: space;
 }
 
 .\[cursor\:length\] {
@@ -772,16 +784,8 @@ video {
   last: pos;
 }
 
-.\[last\:s\] {
-  last: s;
-}
-
 .\[last\:start\] {
   last: start;
-}
-
-.\[lastE\:s\] {
-  last-e: s;
 }
 
 .\[last_to\:from_\] {
@@ -794,14 +798,6 @@ video {
 
 .\[line_offset\:end_line\] {
   line_offset: end line;
-}
-
-.\[loc\:maxloc\] {
-  loc: maxloc;
-}
-
-.\[loc\:newloc\] {
-  loc: newloc;
 }
 
 .\[lower_bound\:lineno\] {
@@ -849,24 +845,16 @@ video {
   position: start;
 }
 
-.\[prev\:curr\] {
-  prev: curr;
-}
-
 .\[prev_end\:start\] {
   prev_end: start;
 }
 
-.\[server\:main\] {
-  server: main;
+.\[seq_start\:pos\] {
+  seq_start: pos;
 }
 
 .\[start\:end\] {
   start: end;
-}
-
-.\[start\:loc\] {
-  start: loc;
 }
 
 .\[start\:stop\] {
@@ -881,12 +869,12 @@ video {
   start_pos: pos;
 }
 
-.\[startloc\:loc\] {
-  startloc: loc;
-}
-
 .\[top\:bottom\] {
   top: bottom;
+}
+
+.\[trail_start\:middle_semicolon_index\] {
+  trail_start: middle semicolon index;
 }
 
 .\[upto\:next\] {
@@ -899,4 +887,8 @@ video {
 
 .\[user\:passwd\@\] {
   user: passwd@;
+}
+
+.\[value_index\:next_value_index\] {
+  value_index: next value index;
 }
