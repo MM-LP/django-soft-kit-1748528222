@@ -1,0 +1,33 @@
+from django.db import models
+from .BoatInfo import BoatInfo
+from django.utils import timezone
+
+class Autosteer(models.Model):
+    boat_id = models.ForeignKey('BoatInfo', on_delete=models.SET_NULL, null=True)
+    as_status = models.BooleanField(default=False)
+    current_config = models.BooleanField(blank=False)
+    auto_steer_system = models.CharField(max_length=255, blank=True, default='Standard')
+    vehicle_profile = models.IntegerField(blank=True, null=True)
+    roll = models.IntegerField(blank=True, null=True)
+    pitch = models.IntegerField(blank=True, null=True)
+    yaw = models.IntegerField(blank=True, null=True)
+    imu_x_offset = models.IntegerField(blank=True, null=True)
+    imu_y_offset = models.IntegerField(blank=True, null=True)
+    imu_z_offset = models.IntegerField(blank=True, null=True)
+    gps1_x_offset = models.IntegerField(blank=True, null=True)
+    gps1_y_offset = models.IntegerField(blank=True, null=True)
+    gps1_z_offset = models.IntegerField(blank=True, null=True)
+    gps2_x_offset = models.IntegerField(blank=True, null=True)
+    gps2_y_offset = models.IntegerField(blank=True, null=True)
+    gps2_z_offset = models.IntegerField(blank=True, null=True)
+    trim_pitch = models.IntegerField(blank=True, null=True)
+    trim_roll = models.IntegerField(blank=True, null=True)
+    gyros_x = models.IntegerField(blank=True, null=True)
+    gyros_y = models.IntegerField(blank=True, null=True)
+    gyros_z = models.IntegerField(blank=True, null=True)
+    compass_cal = models.BooleanField(default=False)
+    imu_cal = models.BooleanField(default=False)
+    period = models.IntegerField(blank=True, null=True)
+    damping = models.IntegerField(blank=True, null=True)
+    xtrack_i = models.IntegerField(blank=True, null=True)
+    last_update = models.DateTimeField(auto_now=True, null=True)

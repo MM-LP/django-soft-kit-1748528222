@@ -7,6 +7,7 @@ import os, random, string
 from pathlib import Path
 from dotenv import load_dotenv
 from str2bool import str2bool
+from celery.schedules import crontab
 
 from helpers import *
 
@@ -56,7 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_browser_reload",
-    "newswerve",
+     "newswerve",
 ]
  
 MIDDLEWARE = [
@@ -184,6 +185,16 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 CELERY_BROKER_URL         = os.environ.get("CELERY_BROKER", "redis://localhost:6379")
 CELERY_RESULT_BACKEND     = os.environ.get("CELERY_BROKER", "redis://localhost:6379")
+
+# __ CELERY Scheduler to purge archived setlogs every 90 days __
+CELERY_BEAT_SCHEDULE = {
+    "purge_old_archives": {
+        "task": "newswerve.management.commands.purge_archives.purge_archives_task",
+        "schedule": crontab(hour=3, minute=0),
+        "args": (90,),
+    },
+}
+
 
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'

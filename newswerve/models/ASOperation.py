@@ -1,0 +1,26 @@
+from django.db import models
+from django.utils import timezone
+
+class ASOperation(models.Model):
+    ff = models.IntegerField(blank=True, null=True)
+    pgain = models.IntegerField(blank=True, null=True)
+    igain = models.IntegerField(blank=True, null=True)
+    period = models.IntegerField(blank=True, null=True)
+    damping = models.IntegerField(blank=True, null=True)
+    xte_i = models.IntegerField(blank=True, null=True)
+    max_g = models.IntegerField(blank=True, null=True)
+    wp_radius = models.IntegerField(blank=True, null=True)
+    sam = models.IntegerField(blank=True, null=True)
+    srm = models.IntegerField(blank=True, null=True)
+    srsm = models.IntegerField(blank=True, null=True)
+    min_wp_dist = models.IntegerField(blank=True, null=True)
+    min_speed = models.IntegerField(blank=True, null=True)
+    override = models.IntegerField(blank=True, null=True)
+    shift_amt = models.IntegerField(blank=True, null=True)
+    gps_offset_y = models.IntegerField(blank=True, null=True)
+    spd_scale = models.IntegerField(blank=True, null=True)
+    servo1_trim = models.IntegerField(blank=True, null=True)
+    servo2_trim = models.IntegerField(blank=True, null=True)
+    ie_wp_radius = models.IntegerField(blank=True, null=True)
+    ie_scale_dist = models.IntegerField(blank=True, null=True)
+    ie_engage_scale = models.CharField(max_length=255, blank=True, null=True)

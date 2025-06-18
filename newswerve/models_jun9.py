@@ -30,7 +30,7 @@ class ASOperation(models.Model):
     ie_engage_scale = models.CharField(max_length=255, blank=True, null=True)
 
 class Autosteer(models.Model):
-    boat = models.ForeignKey(boat_info, on_delete=models.SET_NULL, null=True)
+    boat_id = models.ForeignKey(BoatInfo, on_delete=models.SET_NULL, null=True)
     as_status = models.BooleanField(default=False)
     current_config = models.BooleanField(blank=False)
     auto_steer_system = models.CharField(max_length=255, blank=True, default='Standard')
@@ -57,11 +57,11 @@ class Autosteer(models.Model):
     period = models.IntegerField(blank=True, null=True)
     damping = models.IntegerField(blank=True, null=True)
     xtrack_i = models.IntegerField(blank=True, null=True)
-    last_update = models.DateTimeField(blank=True, null=True)
+    last_update = models.DateTimeField(auto_now=True, null=True)
 
 # Remaining models would be defined here similarly...
 
-class boat_detail(models.Model):
+class BoatDetail(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True)
     length = models.FloatField(null=True)
@@ -85,13 +85,13 @@ class Contact(models.Model):
     notes = models.TextField(blank=True)
 
 class Boat(models.Model):
-    detail = models.ForeignKey(boat_detail, on_delete=models.CASCADE)
+    detail_id = models.ForeignKey(BoatDetail, on_delete=models.SET_NULL, null=True)
     registration_number = models.CharField(max_length=100, blank=True, null=True)
-    owner = models.ForeignKeycontacts, on_delete=models.SET_NULL, null=True)
+    owner = models.ForeignKeyContacts, on_delete=models.SET_NULL, null=True)
 
 class Call(models.Model):
-    contact = models.ForeignKeycontacts, on_delete=models.CASCADE)
-    call_time = models.DateTimeField(blank=True, null=True)
+    contact = models.ForeignKeyContacts, on_delete=models.SET_NULL, null=True)
+    call_time = models.DateTimeField(auto_now=True, null=True)
     subject = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True)
 
@@ -101,21 +101,23 @@ class Course(models.Model):
     city = models.CharField(max_length=100, blank=True, null=True)
     state = models.CharField(max_length=100, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)         # ✅
+    updated_at = models.DateTimeField(auto_now=True, null=True) 
+    is_deleted = models.BooleanField(default=False, blank=True)
     contact_1 = models.CharField(max_length=100, blank=True, null=True)
     contact_2 = models.CharField(max_length=100, blank=True, null=True)
-    course_type = models.CharField(max_length=100, blank=True, null=True)
+    Course_type = models.CharField(max_length=100, blank=True, null=True)
     coordinate_source = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
 
 class CourseSurveyData(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    Course_id = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     survey_date = models.DateField(blank=True, null=True)
     survey_tool = models.CharField(max_length=100,  blank=True, null=True)
     correction_type = models.CharField(max_length=100,  blank=True, null=True)
     baseline_distance = models.FloatField(blank=True, null=True)
-    course_direction = models.CharField(max_length=50, blank=True, null=True)
-    homologation = models.CharField(max_length=100, blank=True, null=True)
+    Course_direction = models.CharField(max_length=50, blank=True, null=True)
+    homoLogation = models.CharField(max_length=100, blank=True, null=True)
     g1_lat = models.FloatField(blank=True, null=True)
     g1_lng = models.FloatField(blank=True, null=True)
     g2_lat = models.FloatField(blank=True, null=True)
@@ -128,7 +130,7 @@ class Driver(models.Model):
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     license_number = models.CharField(max_length=50, blank=True, null=True)
-    contact = models.ForeignKeycontacts, on_delete=models.SET_NULL, null=True)
+    contact = models.ForeignKeyContacts, on_delete=models.SET_NULL, null=True)
 
 class GPS(models.Model):
     timestamp = models.DateTimeField(null=True, blank=True)
@@ -155,14 +157,14 @@ class Health(models.Model):
 
 class Log(models.Model):
     file = models.TextField(max_length=100, blank=True, null=True)
-    log_level = models.IntegerField(null=True, blank=True)
+    Log_level = models.IntegerField(null=True, blank=True)
 
 class Rope(models.Model):
     brand = models.CharField(max_length=100, blank=True, null=True)
     color = models.CharField(max_length=50, blank=True, null=True)
 
 class RopeDetail(models.Model):
-    rope = models.ForeignKey(Rope, on_delete=models.CASCADE)
+    rope_id = models.ForeignKey(Rope, on_delete=models.SET_NULL, null=True)
     section_length = models.FloatField(blank=True, null=True)
     section_color = models.CharField(max_length=50, blank=True, null=True)
 
@@ -182,49 +184,49 @@ class SkierInfo(models.Model):
     last_name = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(max_length=100, blank=True, null=True)
     age = models.IntegerField(null=True, blank=True)
-    rope = models.ForeignKey(Rope, on_delete=models.SET_NULL, null=True)
-    ski = models.ForeignKey(SkiDetail, on_delete=models.SET_NULL, null=True)
-    speed = models.ForeignKey(Speed, on_delete=models.SET_NULL, null=True)
-    zerooff = models.ForeignKey(ZeroOff, on_delete=models.SET_NULL, null=True)
+    rope_id = models.ForeignKey(Rope, on_delete=models.SET_NULL, null=True)
+    ski_id = models.ForeignKey(SkiDetail, on_delete=models.SET_NULL, null=True)
+    speed_id = models.ForeignKey(Speed, on_delete=models.SET_NULL, null=True)
+    zerooff_id = models.ForeignKey(ZeroOff, on_delete=models.SET_NULL, null=True)
     partner_id = models.IntegerField(null=True, blank=True)
     children_id = models.IntegerField(null=True, blank=True)
 
 class Set(models.Model):
-    skier = models.ForeignKey(SkierInfo, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
-    boat = models.ForeignKey(boat_info, on_delete=models.SET_NULL, null=True)
-    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
+    skier_id = models.ForeignKey(SkierInfo, on_delete=models.SET_NULL, null=True)
+    Course_id = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    boat_id = models.ForeignKey(BoatInfo, on_delete=models.SET_NULL, null=True)
+    driver_id = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
     coach = models.CharField(max_length=255, null=True, blank=True)
-    log = models.ForeignKey(Log, on_delete=models.SET_NULL, null=True)
+    Log_id = models.ForeignKey(Log, on_delete=models.SET_NULL, null=True)
     session_number = models.IntegerField(blank=True, null=True)
     event = models.CharField(max_length=255, blank=True, null=True)
-    datetime = models.DateTimeField(blank=True, null=True)
+    datetime = models.DateTimeField(auto_now=True, null=True)
 
 class SetDetail(models.Model):
     session_number = models.IntegerField(blank=True, null=True)
     pass_number = models.IntegerField(blank=True, null=True)
-    pass_time = models.DateTimeField(blank=True, null=True)
+    pass_time = models.DateTimeField(auto_now=True, null=True)
     rope_length = models.IntegerField(blank=True, null=True)
     pass_speed = models.IntegerField(blank=True, null=True)
-    zero_off = models.IntegerField(blank=True, null=True)
+    ZeroOff = models.IntegerField(blank=True, null=True)
     balls = models.IntegerField(blank=True, null=True)
     personal_best = models.BooleanField(default=False)
     pb_term = models.CharField(max_length=255, blank=True, null=True)
     event = models.CharField(max_length=255, blank=True, null=True)
     as_mode = models.BooleanField(blank=False)
-    competition = models.IntegerField(null=True, blank=True)
+    tournament = models.IntegerField(null=True, blank=True)
 
 class CourseSet(models.Model):
-    course = models.ForeignKey(course on_delete=models.CASCADE)
-    session_date = models.DateTimeField(blank=True, null=True)
+    Course_id = models.ForeignKey(Course on_delete=models.SET_NULL, null=True)
+    session_date = models.DateTimeField(auto_now=True, null=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Session for {self.course} on {self.session_date}"
+        return f"Session for {self.Course} on {self.session_date}"
 
 class Format(models.Model):
     filename = models.CharField(max_length=255)
-    nb_streams = models.IntegerField()
+    nb_Streams = models.IntegerField()
     nb_programs = models.IntegerField()
     format_name = models.CharField(max_length=100)
     format_long_name = models.CharField(max_length=255)
@@ -250,14 +252,14 @@ class Format(models.Model):
 
 
 class Stream(models.Model):
-    format = models.ForeignKey(Format, related_name='streams', on_delete=models.CASCADE)
+    format_id = models.ForeignKey(Format, related_name='Streams', on_delete=models.SET_NULL, null=True)
     index = models.IntegerField()
     codec_name = models.CharField(max_length=50)
     codec_long_name = models.CharField(max_length=255)
     profile = models.CharField(max_length=50, null=True, blank=True)
     codec_type = models.CharField(max_length=20)
-    codec_tag_string = models.CharField(max_length=10)
-    codec_tag = models.CharField(max_length=20)
+    codec_Tag_string = models.CharField(max_length=10)
+    codec_Tag = models.CharField(max_length=20)
     width = models.IntegerField(null=True, blank=True)
     height = models.IntegerField(null=True, blank=True)
     coded_width = models.IntegerField(null=True, blank=True)
