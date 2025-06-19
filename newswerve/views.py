@@ -42,6 +42,13 @@ def presentation(request):
 
 def indextest(request):
   return render(request, 'pages/indextest.html')
+  
+def onboarding(request):
+  return render(request, 'accounts/onboard_1.html')
+
+def userguest(request):
+  return render(request,'accounts/guestlogin.html')   
+
 
 # Authentication
 
@@ -80,6 +87,8 @@ class UserPasswordResetConfirmView(PasswordResetConfirmView):
 class UserPasswordChangeView(PasswordChangeView):
   template_name = 'accounts/password_change.html'
   form_class = UserPasswordChangeForm
+
+
 
 
 # Sections

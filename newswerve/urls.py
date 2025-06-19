@@ -17,6 +17,7 @@ urlpatterns = [
     path('indexcards/', views.index_cards, name='indexcards'),
 
 
+
     # Authentication
     path('accounts/login/', views.UserLoginView.as_view(), name='login'),
     path('accounts/register/', views.register, name='register'),
@@ -34,6 +35,9 @@ urlpatterns = [
     path('accounts/password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
         template_name='accounts/password_reset_complete.html'
     ), name='password_reset_complete'),
+    path('accounts/onboarding', views.onboarding, name='onboarding'),
+    path('accounts/guestlogin', views.userguest, name='userguest'),
+
 
     # Sections
     path('presentation/', views.presentation, name='presentation'),
